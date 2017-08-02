@@ -1,0 +1,17 @@
+FROM arm32v7/debian:jessie
+
+LABEL maintainer="akshmakov@gmail.com"
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install -y bash avrdude && rm -rf /var/lib/apt/lists/*
+
+COPY entrypoint.sh /entrypoint.sh
+
+COPY external/avrdude-arduino.conf /etc/avrdude.arduino.conf
+
+WORKDIR /workdir
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+CMD [ "-?" ]
